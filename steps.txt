@@ -1,0 +1,56 @@
+ng new angular-lazy-loading-example --routing --style=css --skip-tests
+ng generate module shop --route shop --module app.module
+ng generate component shop/cart
+ng generate component shop/checkout
+ng generate component shop/confirm
+
+
+app-routing-module.ts :
+
+
+const routes: Routes = [
+  { path: '', component: ShopComponent },
+
+  { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule) }
+];
+
+shop module .ts
+
+const routes: Routes = [
+  { path: '', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'confirm', component: ConfirmComponent },
+];
+
+
+
+
+
+Appcomponent.ts
+
+  constructor(private router:Router) { }
+
+  openshop(){
+//alert("pa");
+this.router.navigate(['shop']);
+
+  }
+  openshopconfirm(){
+    //alert("pa");
+    this.router.navigate(['shop/confirm']);
+    
+      }
+      openshopcheckout(){
+        //alert("pa");
+        this.router.navigate(['shop/checkout']);
+        
+          }
+
+appcomponent.html
+
+<div class="card-container"  >
+  <button class= "card highlight-card" (click)='openshop()'>Product Page</button>
+  <button  class= "card highlight-card "  (click)='openshopconfirm()'>Eligibile One day Delivery</button>
+  <button  class= "card highlight-card"  (click)='openshopcheckout()'>checkout</button>
+
+</div>
